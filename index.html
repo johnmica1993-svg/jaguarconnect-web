@@ -25,6 +25,11 @@
             --gray-400: #94A3B8;
             --gray-500: #64748B;
             --gray-700: #334155;
+            --light-bg: #FFFFFF;
+            --light-bg-alt: #F8FAFC;
+            --light-border: #E2E8F0;
+            --light-text: #475569;
+            --light-heading: #0F1D3D;
             --font-display: 'Bebas Neue', cursive;
             --font-body: 'DM Sans', sans-serif;
         }
@@ -72,6 +77,24 @@
 
         .section-alt {
             background-color: var(--navy);
+        }
+
+        .section-light {
+            background-color: var(--light-bg);
+        }
+
+        .section-light-alt {
+            background-color: var(--light-bg-alt);
+        }
+
+        .section-light .section-title,
+        .section-light-alt .section-title {
+            color: var(--light-heading);
+        }
+
+        .section-light .section-subtitle,
+        .section-light-alt .section-subtitle {
+            color: var(--light-text);
         }
 
         .section-title {
@@ -346,7 +369,7 @@
 
         .hero-subtitle {
             font-size: 18px;
-            color: var(--gray-400);
+            color: var(--gray-300);
             margin-bottom: 36px;
             max-width: 500px;
             line-height: 1.7;
@@ -450,12 +473,12 @@
 
         .hero-card-item p {
             font-size: 13px;
-            color: var(--gray-400);
+            color: var(--gray-300);
         }
 
         /* ===== 4. Stats Bar ===== */
         .stats-bar {
-            background: var(--navy);
+            background: var(--light-bg);
             padding: 60px 0;
             position: relative;
         }
@@ -467,7 +490,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+            background: linear-gradient(90deg, transparent, var(--light-border), transparent);
         }
 
         .stats-bar::after {
@@ -477,7 +500,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+            background: linear-gradient(90deg, transparent, var(--light-border), transparent);
         }
 
         .stats-grid {
@@ -498,7 +521,7 @@
 
         .stat-item .stat-label {
             font-size: 14px;
-            color: var(--gray-400);
+            color: var(--gray-700);
             font-weight: 500;
         }
 
@@ -510,13 +533,11 @@
         }
 
         .benefit-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--light-bg);
+            border: 1px solid var(--light-border);
             border-radius: 20px;
             padding: 36px 28px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
         }
@@ -540,12 +561,13 @@
         .benefit-card:hover {
             transform: translateY(-4px);
             border-color: rgba(227, 27, 35, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         .benefit-icon {
             width: 52px;
             height: 52px;
-            background: rgba(227, 27, 35, 0.12);
+            background: rgba(227, 27, 35, 0.08);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -563,11 +585,12 @@
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 8px;
+            color: var(--light-heading);
         }
 
         .benefit-card p {
             font-size: 14px;
-            color: var(--gray-400);
+            color: var(--light-text);
             line-height: 1.6;
         }
 
@@ -581,13 +604,11 @@
         }
 
         .function-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--light-bg);
+            border: 1px solid var(--light-border);
             border-radius: 20px;
             padding: 36px 28px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             align-items: flex-start;
             gap: 20px;
@@ -596,6 +617,7 @@
         .function-card:hover {
             transform: translateY(-3px);
             border-color: rgba(227, 27, 35, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         .function-number {
@@ -610,11 +632,12 @@
             font-size: 17px;
             font-weight: 700;
             margin-bottom: 6px;
+            color: var(--light-heading);
         }
 
         .function-card p {
             font-size: 14px;
-            color: var(--gray-400);
+            color: var(--light-text);
             line-height: 1.6;
         }
 
@@ -639,13 +662,14 @@
             gap: 16px;
             font-size: 16px;
             font-weight: 500;
+            color: var(--light-heading);
         }
 
         .why-check {
             width: 32px;
             height: 32px;
             min-width: 32px;
-            background: rgba(227, 27, 35, 0.12);
+            background: rgba(227, 27, 35, 0.08);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -687,14 +711,13 @@
 
         /* ===== 8. Job Offer ===== */
         .offer-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--light-bg);
+            border: 1px solid rgba(227, 27, 35, 0.2);
             border-radius: 24px;
             padding: 48px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
 
         .offer-header {
@@ -707,6 +730,7 @@
             font-size: 36px;
             letter-spacing: 2px;
             margin-bottom: 4px;
+            color: var(--light-heading);
         }
 
         .offer-badge {
@@ -732,16 +756,16 @@
             align-items: center;
             gap: 14px;
             padding: 16px;
-            background: rgba(15, 29, 61, 0.5);
+            background: var(--light-bg-alt);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--light-border);
         }
 
         .offer-item-icon {
             width: 40px;
             height: 40px;
             min-width: 40px;
-            background: rgba(227, 27, 35, 0.12);
+            background: rgba(227, 27, 35, 0.08);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -756,7 +780,7 @@
 
         .offer-item-text .offer-label {
             font-size: 12px;
-            color: var(--gray-500);
+            color: var(--light-text);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -765,6 +789,7 @@
         .offer-item-text .offer-value {
             font-size: 15px;
             font-weight: 600;
+            color: var(--light-heading);
         }
 
         .offer-cta {
@@ -829,9 +854,13 @@
             position: relative;
         }
 
+        .growth-card h3 span.accent {
+            color: var(--red);
+        }
+
         .growth-card p {
             font-size: 16px;
-            color: var(--gray-400);
+            color: var(--gray-300);
             max-width: 500px;
             margin: 0 auto;
             line-height: 1.7;
@@ -855,7 +884,7 @@
             left: 15%;
             right: 15%;
             height: 2px;
-            background: linear-gradient(90deg, var(--red), var(--card-border), var(--red));
+            background: linear-gradient(90deg, var(--red), var(--light-border), var(--red));
         }
 
         .process-step {
@@ -866,7 +895,7 @@
         .process-number {
             width: 80px;
             height: 80px;
-            background: var(--card-bg);
+            background: var(--light-bg);
             border: 2px solid var(--red);
             border-radius: 50%;
             display: flex;
@@ -887,11 +916,12 @@
             font-size: 17px;
             font-weight: 700;
             margin-bottom: 8px;
+            color: var(--light-heading);
         }
 
         .process-step p {
             font-size: 14px;
-            color: var(--gray-400);
+            color: var(--light-text);
             line-height: 1.6;
         }
 
@@ -909,20 +939,20 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--light-bg);
+            border: 1px solid var(--light-border);
             border-radius: 50px;
             padding: 14px 28px;
             font-size: 15px;
             font-weight: 500;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: border-color 0.3s ease, transform 0.2s ease;
+            color: var(--light-heading);
+            transition: border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
 
         .profile-tag:hover {
             border-color: rgba(227, 27, 35, 0.4);
             transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
         }
 
         .profile-tag svg {
@@ -960,7 +990,7 @@
 
         .final-cta p {
             font-size: 18px;
-            color: var(--gray-400);
+            color: var(--gray-300);
             margin-bottom: 40px;
             position: relative;
         }
@@ -1085,7 +1115,7 @@
             padding-top: 24px;
             text-align: center;
             font-size: 13px;
-            color: var(--gray-700);
+            color: var(--gray-500);
         }
 
         /* ===== Responsive: 1024px ===== */
@@ -1438,7 +1468,7 @@
     </div>
 
     <!-- 5. Benefits -->
-    <section id="beneficios">
+    <section id="beneficios" class="section-light-alt">
         <div class="container">
             <h2 class="section-title reveal">LO QUE <span class="accent">OFRECEMOS</span></h2>
             <p class="section-subtitle reveal">Todo lo que necesitas para empezar tu carrera con el pie derecho</p>
@@ -1490,7 +1520,7 @@
     </section>
 
     <!-- 6. What You'll Do (Functions) -->
-    <section id="funciones" class="section-alt">
+    <section id="funciones" class="section-light">
         <div class="container">
             <h2 class="section-title reveal">¿QUÉ <span class="accent">HARÁS</span>?</h2>
             <p class="section-subtitle reveal">Tu día a día como asesor comercial en Jaguar Connect</p>
@@ -1528,7 +1558,7 @@
     </section>
 
     <!-- 7. Why Work With Us -->
-    <section>
+    <section class="section-light-alt">
         <div class="container">
             <h2 class="section-title reveal">¿POR QUÉ <span class="accent">NOSOTROS</span>?</h2>
             <p class="section-subtitle reveal">Lo que nos diferencia como equipo</p>
@@ -1583,7 +1613,7 @@
     </section>
 
     <!-- 8. Job Offer -->
-    <section id="oferta" class="section-alt">
+    <section id="oferta" class="section-light">
         <div class="container">
             <h2 class="section-title reveal">OFERTA <span class="accent">LABORAL</span></h2>
             <p class="section-subtitle reveal">Asesor Comercial — Call Center</p>
@@ -1677,7 +1707,7 @@
     </section>
 
     <!-- 9. Growth Highlight -->
-    <section>
+    <section class="section-alt">
         <div class="container">
             <div class="growth-card reveal">
                 <div class="growth-icon">
@@ -1690,7 +1720,7 @@
     </section>
 
     <!-- 10. Application Process -->
-    <section id="proceso" class="section-alt">
+    <section id="proceso" class="section-light-alt">
         <div class="container">
             <h2 class="section-title reveal">PROCESO DE <span class="accent">POSTULACIÓN</span></h2>
             <p class="section-subtitle reveal">3 pasos simples para empezar</p>
@@ -1715,7 +1745,7 @@
     </section>
 
     <!-- 11. Profile Section -->
-    <section>
+    <section class="section-light">
         <div class="container">
             <h2 class="section-title reveal">¿ERES <span class="accent">TÚ</span>?</h2>
             <p class="section-subtitle reveal">No necesitas experiencia — buscamos actitud</p>
@@ -1749,7 +1779,7 @@
     </section>
 
     <!-- 12. Final CTA -->
-    <section class="final-cta section-alt">
+    <section class="final-cta" style="background-color: var(--navy-deep);">
         <div class="container">
             <h2 class="reveal">EMPIEZA <span class="accent">HOY</span> TU CAMBIO</h2>
             <p class="reveal">Gana dinero desde tus mañanas. Vacantes limitadas — no dejes pasar esta oportunidad.</p>
