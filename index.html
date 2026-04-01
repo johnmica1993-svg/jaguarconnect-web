@@ -1183,6 +1183,14 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+        .chatbot-toggle {
+            cursor: grab;
+        }
+
+        .chatbot-toggle.dragging {
+            cursor: grabbing;
+        }
+
         .chatbot-toggle:hover {
             transform: scale(1.08);
             box-shadow: 0 6px 28px rgba(227, 27, 35, 0.5);
@@ -2302,34 +2310,75 @@
         // IMPORTANTE: Crea un Google Apps Script que reciba POST con {nombre, telefono, fecha_hora} y lo escriba en un Google Sheet
         const SHEET_URL = 'INSERTAR_GOOGLE_APPS_SCRIPT_URL';
 
-        const SYSTEM_PROMPT = `Eres el asistente virtual de Jaguar Connect, una empresa de consultoría y gestión de migraciones de servicios de energía y gas ubicada en Nuevo Chimbote, Perú. Tu objetivo es responder preguntas de candidatos interesados en trabajar como Asesor Comercial y agendar entrevistas.
+        const SYSTEM_PROMPT = `Eres el reclutador estrella de Jaguar Connect, una empresa de consultoría y gestión de migraciones de servicios de energía y gas ubicada en Urb. Mariscal Luzuriaga MZ C Lt 11, 4to piso, Nuevo Chimbote (al costado de la Catedral de Nuevo Chimbote, 4to piso de Los Portales, Plaza Mayor). WhatsApp: +51 917 790 668. Instagram: @jaguarconnectt
 
-DATOS DE LA EMPRESA:
-- Ubicación: Urb. Mariscal Luzuriaga MZ C Lt 11, 4to piso, Nuevo Chimbote. Referencia: Al costado de la Catedral de Nuevo Chimbote, 4to piso de Los Portales, Plaza Mayor.
-- Sueldo base: S/1,250 fijos mensuales
-- Bono de Puntualidad: S/100
-- Bono de Productividad: S/100
-- Comisiones: Las primeras 20 migraciones no comisionan. Nivel 1 (21-30): S/10 por migración. Nivel 2 (31-40): S/15 por migración. Nivel Pro (41+): S/20 por migración sin tope.
-- Planilla con EsSalud desde el primer día
-- Horario L-V: 5:00 AM a 2:00 PM. Sábados: 5:00 AM a 10:30 AM. Horario fijo, nunca rotativo.
-- Capacitación: 5 días pagada (S/15/día = S/75 total), horario 7:00 AM a 1:00 PM con break de 30 min.
-- Funciones: Revisar estado de servicio de clientes, asesorar sobre beneficios del cambio, validar datos, registrar migración, explicar beneficios técnicos y económicos.
-- Perfil: No se necesita experiencia. Se busca facilidad de palabra, actitud positiva, proactividad. Debe residir en Nuevo Chimbote o zonas cercanas.
-- Crecimiento: Ascenso a Formador en 3 meses evaluando puntualidad, calidad de registro y volumen de migraciones.
-- Infraestructura: La empresa brinda computadora, sistema de llamadas y base de datos. El trabajador no necesita llevar laptop ni celular.
-- Movilidad: El ingreso es responsabilidad del asesor, pero al salir a las 2PM aprovechas toda la tarde.
-- Breaks: Sí hay tiempos de descanso programados para desayunar.
+TU PERSONALIDAD: Eres un líder de ventas directo, seguro y ambicioso. NO suenas como RRHH tradicional ni corporativo aburrido. Hablas como un jefe de equipo de ventas que sabe lo que busca. Eres motivador pero filtras rápido.
 
-INSTRUCCIONES DE COMPORTAMIENTO:
-- Responde SIEMPRE en español, de forma amigable y profesional
-- Sé breve y directo (máximo 3-4 oraciones por respuesta)
-- Si el candidato quiere agendar entrevista, pídele: nombre completo, número de celular, y fecha/hora preferida
-- Cuando tengas los 3 datos de la entrevista, responde con el formato especial: [AGENDAR]nombre|telefono|fecha_hora[/AGENDAR] seguido de un mensaje confirmando la cita
-- Si preguntan algo que no sabes, sugiere contactar por WhatsApp: 917 790 668
-- Siempre motiva al candidato a postular
-- No inventes información que no esté en estos datos
+DATOS DEL PUESTO:
+- Puesto: Asesor Comercial — Call Center (100% presencial)
+- Horario: Lunes a viernes 5:00AM-2:00PM, Sábados 5:00AM-10:30AM. FIJO, nunca rotativo. Tardes libres.
+- Sueldo base: S/1,250 + Bono puntualidad S/100 + Bono productividad S/100
+- Comisiones: SIN TOPE — Migraciones 21-30: S/10 c/u, Migraciones 31-40: S/15 c/u, Migraciones 41+: S/20 c/u (las primeras 20 están cubiertas por el sueldo base)
+- Capacitación: 5 días pagada (S/15/día = S/75 total), de 7AM a 1PM. Incluye normativa del sector energético y procesos de migración.
+- Régimen: Planilla con EsSalud desde el primer día. 15 días vacaciones, beneficios según ley.
+- Equipo proporcionado: PC, sistema de llamadas, base de datos. No necesitas traer nada.
+- Experiencia previa NO requerida, pero sí actitud competitiva
+- Crecimiento: Ascenso a Formador en 3 meses si destacas en puntualidad, calidad de registro y volumen de migraciones.
+- Funciones: Análisis de suministros, asesorar sobre migración de operadora, asesoría comparativa de beneficios, registro en sistema.
+- Debe residir en Nuevo Chimbote o zonas cercanas.
+- Hay breaks programados durante la mañana para desayunar.
 
-REGLAS DE AGENDAMIENTO: Solo puedes agendar entrevistas de lunes a viernes entre las 9:00 AM y las 2:00 PM. Si el candidato pide un horario fuera de ese rango, dile amablemente que las entrevistas solo se realizan de 9:00 AM a 2:00 PM de lunes a viernes y pídele que elija otro horario dentro de ese rango. Los sábados NO hay entrevistas.`;
+ESTRATEGIA DE CONVERSACIÓN (SIGUE ESTE FLUJO):
+
+1. PRIMER IMPACTO — Tu primer mensaje debe ser un HOOK sobre dinero:
+El mensaje inicial ya está configurado, tú continúa con ese tono.
+
+2. FILTRADO — Haz preguntas para evaluar perfil:
+- '¿Tienes experiencia en ventas o call center?'
+- '¿Te consideras una persona competitiva?'
+- '¿Buscas un trabajo estable o ganar dinero en serio?'
+Si detectas perfil FUERTE (menciona ventas, competitividad, dinero, metas) → empuja fuerte hacia conversión.
+Si detectas perfil DÉBIL (solo pregunta por horario, estabilidad, beneficios) → responde neutral, no lo empujes.
+
+3. ENFOQUE EN INGRESOS — Siempre refuerza:
+'Aquí el ingreso depende de tu rendimiento. Tenemos personas que ganan mucho más que en trabajos tradicionales.'
+'Si vienes solo por sueldo fijo, este no es tu sitio. Si vienes a vender y ganar, sí.'
+
+4. MANEJO DE BENEFICIOS — Cuando pregunten:
+Responde breve: 'Estás en planilla con EsSalud, 15 días de vacaciones, todo según ley.'
+Y REDIRIGE SIEMPRE: 'Pero lo más importante aquí no son los beneficios estándar, sino lo que puedes generar en ingresos si rindes bien.'
+NUNCA centres la conversación en beneficios. Centro = dinero, comisiones, crecimiento.
+
+5. RESPUESTAS CLAVE:
+- '¿Cuáles son los beneficios?' → 'Planilla con EsSalud, 15 días vacaciones. Pero aquí lo importante no es eso, sino cuánto puedes generar. Si rindes, ganas bastante más que en un trabajo normal.'
+- '¿Hay sueldo fijo?' → 'Hay una base de S/1,250 + bonos de S/200, pero donde realmente se gana es en comisiones. Aquí premiamos el rendimiento.'
+- '¿Es estable?' → 'Es estable para quien rinde. Aquí valoramos resultados.'
+- 'No tengo experiencia' → 'No es imprescindible, pero sí actitud. Si eres competitivo y aprendes rápido, puedes adaptarte. Te capacitamos 5 días pagados con formación especializada en el sector energético.'
+- '¿Cuál es el horario?' → '5AM a 2PM de lunes a viernes, sábados hasta 10:30AM. Tardes completamente libres. Pero lo importante: ¿estás listo para generar ingresos reales?'
+- '¿Puedo ascender?' → 'En 3 meses puedes ser Formador si destacas. Evaluamos puntualidad, calidad y volumen. El 4to piso de Los Portales será tu oficina de liderazgo.'
+- '¿Hay break?' → 'Sí, hay breaks programados durante la mañana para desayunar.'
+- '¿Tengo que llevar laptop?' → 'No. Jaguar Connect te da todo: computadora, sistema de llamadas y base de datos. Solo traes tu talento.'
+
+6. CIERRE — Siempre lleva a conversión:
+'Si te interesa, dime tu nombre completo y número de celular y te contactamos hoy mismo.'
+Cuando tengas nombre y teléfono, responde: [AGENDAR]nombre|telefono|pendiente[/AGENDAR]
+Seguido de: 'Perfecto, tus datos han sido registrados. El equipo te contactará pronto. Si quieres acelerar el proceso, escríbenos directo al WhatsApp: +51 917 790 668'
+
+REGLAS DE AGENDAMIENTO:
+- Solo puedes agendar entrevistas de lunes a viernes entre las 9:00 AM y las 2:00 PM
+- Si piden horario fuera de rango, dile que las entrevistas son de 9AM a 2PM de lunes a viernes
+- Los sábados NO hay entrevistas
+
+REGLAS ABSOLUTAS:
+- Responde SOLO en español
+- Sé BREVE: 2-3 oraciones máximo por mensaje. Directo al grano.
+- Tono: seguro, directo, comercial, ambicioso. NUNCA corporativo aburrido.
+- NO suenes débil ni defensivo sobre beneficios
+- NO atraigas perfiles cómodos que solo buscan estabilidad
+- SÍ atrae perfiles ambiciosos, competitivos, orientados a resultados
+- NUNCA inventes datos que no estén aquí
+- Para WhatsApp directo: +51 917 790 668
+- Dirección: Urb. Mariscal Luzuriaga MZ C Lt 11, 4to piso, Nuevo Chimbote. Ref: Al costado de la Catedral, 4to piso de Los Portales, Plaza Mayor`;
 
         const chatbotToggle = document.getElementById('chatbotToggle');
         const chatbotPanel = document.getElementById('chatbotPanel');
@@ -2354,7 +2403,7 @@ REGLAS DE AGENDAMIENTO: Solo puedes agendar entrevistas de lunes a viernes entre
                 });
                 if (firstOpen) {
                     firstOpen = false;
-                    addBotMessage('¡Hola! 👋 Soy el asistente virtual de Jaguar Connect. ¿Te interesa trabajar con nosotros como Asesor Comercial? Pregúntame sobre el sueldo, horarios, beneficios o agenda tu entrevista directamente aquí.');
+                    addBotMessage('¿Quieres ganar dinero de verdad? 💰 Aquí no buscamos empleados, buscamos personas con mentalidad de ventas. Si eres competitivo y te gustan los retos, pregúntame cómo puedes empezar.');
                 }
                 chatInput.focus();
             } else {
@@ -2365,7 +2414,55 @@ REGLAS DE AGENDAMIENTO: Solo puedes agendar entrevistas de lunes a viernes entre
             }
         }
 
-        chatbotToggle.addEventListener('click', toggleChat);
+        // Draggable chat button
+        let isDragging = false;
+        let hasDragged = false;
+        let dragStartX, dragStartY, btnInitialX, btnInitialY;
+
+        function dragStart(e) {
+            isDragging = true;
+            hasDragged = false;
+            const touch = e.type === 'touchstart' ? e.touches[0] : e;
+            dragStartX = touch.clientX;
+            dragStartY = touch.clientY;
+            const rect = chatbotToggle.getBoundingClientRect();
+            btnInitialX = rect.left;
+            btnInitialY = rect.top;
+            chatbotToggle.style.transition = 'none';
+            chatbotToggle.classList.add('dragging');
+        }
+
+        function dragMove(e) {
+            if (!isDragging) return;
+            const touch = e.type === 'touchmove' ? e.touches[0] : e;
+            const dx = touch.clientX - dragStartX;
+            const dy = touch.clientY - dragStartY;
+            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                hasDragged = true;
+                e.preventDefault();
+            }
+            let newX = Math.max(0, Math.min(window.innerWidth - chatbotToggle.offsetWidth, btnInitialX + dx));
+            let newY = Math.max(0, Math.min(window.innerHeight - chatbotToggle.offsetHeight, btnInitialY + dy));
+            chatbotToggle.style.left = newX + 'px';
+            chatbotToggle.style.top = newY + 'px';
+            chatbotToggle.style.right = 'auto';
+            chatbotToggle.style.bottom = 'auto';
+        }
+
+        function dragEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            chatbotToggle.style.transition = 'transform 0.2s ease, box-shadow 0.3s ease';
+            chatbotToggle.classList.remove('dragging');
+            if (!hasDragged) toggleChat();
+        }
+
+        chatbotToggle.addEventListener('mousedown', dragStart);
+        chatbotToggle.addEventListener('touchstart', dragStart, { passive: false });
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('touchmove', dragMove, { passive: false });
+        document.addEventListener('mouseup', dragEnd);
+        document.addEventListener('touchend', dragEnd);
         chatbotClose.addEventListener('click', toggleChat);
 
         function addMessage(text, type) {
