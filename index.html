@@ -755,6 +755,123 @@
             line-height: 1.6;
         }
 
+        /* ===== 7d. Calculator ===== */
+        .calc-card {
+            background: var(--navy-deep);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--white);
+        }
+
+        .calc-migrations {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .calc-migrations .calc-number {
+            font-family: var(--font-display);
+            font-size: 72px;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .calc-migrations .calc-label {
+            font-size: 14px;
+            color: var(--gray-400);
+            margin-top: 4px;
+        }
+
+        .calc-slider {
+            width: 100%;
+            margin: 24px 0 36px;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--navy-mid);
+            outline: none;
+        }
+
+        .calc-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--red);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .calc-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--red);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .calc-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .calc-row .calc-row-label {
+            color: var(--gray-400);
+        }
+
+        .calc-row .calc-row-value {
+            font-weight: 700;
+        }
+
+        .calc-row.calc-commissions .calc-row-value {
+            color: var(--red);
+        }
+
+        .calc-total {
+            background: rgba(227, 27, 35, 0.12);
+            border: 1px solid rgba(227, 27, 35, 0.3);
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calc-total .calc-total-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-300);
+        }
+
+        .calc-total .calc-total-value {
+            font-family: var(--font-display);
+            font-size: 42px;
+            color: var(--red);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .calc-card { padding: 28px 20px; }
+            .calc-migrations .calc-number { font-size: 56px; }
+            .calc-total .calc-total-value { font-size: 32px; }
+        }
+
         /* ===== 8. Job Offer ===== */
         .offer-card {
             background: var(--light-bg);
@@ -1975,6 +2092,43 @@
         </div>
     </section>
 
+    <!-- 7d. Calculator -->
+    <section class="section-light-alt">
+        <div class="container">
+            <h2 class="section-title reveal"><span class="accent">CALCULADORA</span></h2>
+            <p class="section-subtitle reveal">Mueve el slider y descubre cuánto puedes ganar como Asesor Comercial</p>
+            <div class="calc-card reveal">
+                <div class="calc-migrations">
+                    <div class="calc-number" id="calcNumber">20</div>
+                    <div class="calc-label">migraciones mensuales</div>
+                </div>
+                <input type="range" min="0" max="60" value="20" class="calc-slider" id="calcSlider">
+                <div class="calc-breakdown">
+                    <div class="calc-row">
+                        <span class="calc-row-label">Sueldo base</span>
+                        <span class="calc-row-value">S/1,250</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="calc-row-label">Bono de puntualidad</span>
+                        <span class="calc-row-value">S/100</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="calc-row-label">Bono de productividad</span>
+                        <span class="calc-row-value">S/100</span>
+                    </div>
+                    <div class="calc-row calc-commissions">
+                        <span class="calc-row-label">Comisiones</span>
+                        <span class="calc-row-value" id="calcComm">S/0</span>
+                    </div>
+                </div>
+                <div class="calc-total">
+                    <span class="calc-total-label">INGRESO TOTAL ESTIMADO</span>
+                    <span class="calc-total-value" id="calcTotal">S/1,450</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 8. Job Offer -->
     <section id="oferta" class="section-light">
         <div class="container">
@@ -2300,6 +2454,34 @@
         revealElements.forEach(el => observer.observe(el));
 
         // =============================================
+        // INCOME CALCULATOR
+        // =============================================
+        const calcSlider = document.getElementById('calcSlider');
+        const calcNumber = document.getElementById('calcNumber');
+        const calcComm = document.getElementById('calcComm');
+        const calcTotal = document.getElementById('calcTotal');
+
+        function calcCommissions(m) {
+            let comm = 0;
+            if (m > 40) comm += (m - 40) * 20;
+            if (m > 30) comm += (Math.min(m, 40) - 30) * 15;
+            if (m > 20) comm += (Math.min(m, 30) - 20) * 10;
+            return comm;
+        }
+
+        function updateCalc() {
+            const m = parseInt(calcSlider.value);
+            const comm = calcCommissions(m);
+            const total = 1250 + 100 + 100 + comm;
+            calcNumber.textContent = m;
+            calcComm.textContent = 'S/' + comm.toLocaleString();
+            calcTotal.textContent = 'S/' + total.toLocaleString();
+        }
+
+        calcSlider.addEventListener('input', updateCalc);
+        updateCalc();
+
+        // =============================================
         // CHATBOT — Anthropic API + Interview Scheduling
         // =============================================
 
@@ -2414,55 +2596,64 @@ REGLAS ABSOLUTAS:
             }
         }
 
-        // Draggable chat button
-        let isDragging = false;
-        let hasDragged = false;
-        let dragStartX, dragStartY, btnInitialX, btnInitialY;
+        // Draggable chat button — tap vs drag detection
+        (function() {
+            let pointerDown = false;
+            let hasDragged = false;
+            let startX = 0, startY = 0, btnX = 0, btnY = 0;
+            const DRAG_THRESHOLD = 5;
 
-        function dragStart(e) {
-            isDragging = true;
-            hasDragged = false;
-            const touch = e.type === 'touchstart' ? e.touches[0] : e;
-            dragStartX = touch.clientX;
-            dragStartY = touch.clientY;
-            const rect = chatbotToggle.getBoundingClientRect();
-            btnInitialX = rect.left;
-            btnInitialY = rect.top;
-            chatbotToggle.style.transition = 'none';
-            chatbotToggle.classList.add('dragging');
-        }
-
-        function dragMove(e) {
-            if (!isDragging) return;
-            const touch = e.type === 'touchmove' ? e.touches[0] : e;
-            const dx = touch.clientX - dragStartX;
-            const dy = touch.clientY - dragStartY;
-            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-                hasDragged = true;
-                e.preventDefault();
+            function onPointerDown(e) {
+                pointerDown = true;
+                hasDragged = false;
+                const pt = e.touches ? e.touches[0] : e;
+                startX = pt.clientX;
+                startY = pt.clientY;
+                const rect = chatbotToggle.getBoundingClientRect();
+                btnX = rect.left;
+                btnY = rect.top;
+                chatbotToggle.style.transition = 'none';
+                chatbotToggle.classList.add('dragging');
+                e.preventDefault(); // prevent ghost click
             }
-            let newX = Math.max(0, Math.min(window.innerWidth - chatbotToggle.offsetWidth, btnInitialX + dx));
-            let newY = Math.max(0, Math.min(window.innerHeight - chatbotToggle.offsetHeight, btnInitialY + dy));
-            chatbotToggle.style.left = newX + 'px';
-            chatbotToggle.style.top = newY + 'px';
-            chatbotToggle.style.right = 'auto';
-            chatbotToggle.style.bottom = 'auto';
-        }
 
-        function dragEnd() {
-            if (!isDragging) return;
-            isDragging = false;
-            chatbotToggle.style.transition = 'transform 0.2s ease, box-shadow 0.3s ease';
-            chatbotToggle.classList.remove('dragging');
-            if (!hasDragged) toggleChat();
-        }
+            function onPointerMove(e) {
+                if (!pointerDown) return;
+                const pt = e.touches ? e.touches[0] : e;
+                const dx = pt.clientX - startX;
+                const dy = pt.clientY - startY;
+                if (!hasDragged && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+                    hasDragged = true;
+                }
+                if (hasDragged) {
+                    e.preventDefault();
+                    const w = chatbotToggle.offsetWidth, h = chatbotToggle.offsetHeight;
+                    const nx = Math.max(0, Math.min(window.innerWidth - w, btnX + dx));
+                    const ny = Math.max(0, Math.min(window.innerHeight - h, btnY + dy));
+                    chatbotToggle.style.left = nx + 'px';
+                    chatbotToggle.style.top = ny + 'px';
+                    chatbotToggle.style.right = 'auto';
+                    chatbotToggle.style.bottom = 'auto';
+                }
+            }
 
-        chatbotToggle.addEventListener('mousedown', dragStart);
-        chatbotToggle.addEventListener('touchstart', dragStart, { passive: false });
-        document.addEventListener('mousemove', dragMove);
-        document.addEventListener('touchmove', dragMove, { passive: false });
-        document.addEventListener('mouseup', dragEnd);
-        document.addEventListener('touchend', dragEnd);
+            function onPointerUp() {
+                if (!pointerDown) return;
+                pointerDown = false;
+                chatbotToggle.style.transition = 'transform 0.2s ease, box-shadow 0.3s ease';
+                chatbotToggle.classList.remove('dragging');
+                if (!hasDragged) toggleChat();
+            }
+
+            chatbotToggle.addEventListener('mousedown', onPointerDown);
+            chatbotToggle.addEventListener('touchstart', onPointerDown, { passive: false });
+            document.addEventListener('mousemove', onPointerMove);
+            document.addEventListener('touchmove', onPointerMove, { passive: false });
+            document.addEventListener('mouseup', onPointerUp);
+            document.addEventListener('touchend', onPointerUp);
+            // Block any native click on the toggle — tap is handled via pointerUp
+            chatbotToggle.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); });
+        })();
         chatbotClose.addEventListener('click', toggleChat);
 
         function addMessage(text, type) {
